@@ -93,7 +93,14 @@ Pour visualiser les modifications qui feront partie de la prochaine validation o
 
 Commande : `git commit`
 
+Une fois que l'index(staged) est dans un état qui convient au développeur, on peut valider les modifications.
 
+Option :
+
+* `-v` : ajoute le diff dans le commentaire
+* `-m 'mon commentaire'` : ajoute directement le commentaire sans passer par l'éditeur de texte.
+
+Une fois l'opération de commit terminée ce dernier possèdera un identifiant (ID) au format SHA-1 (une version raccourcie est affichée).
 
 
 
