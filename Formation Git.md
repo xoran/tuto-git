@@ -1,8 +1,10 @@
 # Formation Git
-## Tuto.com / Edouard Ferrari
+## Alain Kelleter
+alain@ktdev.pro - https://www.ktdev.pro
 
+ 
 ### 1. Installation
-Voir Cours (simple à réliser quelque soit la plateforme)
+Simple à réaliser quelque soit la plateforme sur laquelle on travaille (GNU/Linux / Windows / MacOS)
 
 ### 2. Configuration
 Sur 3 niveaux :
@@ -35,19 +37,11 @@ ON PEUT VERIFIER LA CONFIGURATION AVEC LA COMMANDE :
 ### 3. Mise en place d'un premier dépôt
 
 #### 3.1 Créer un dépôt Git
-* Initialiser un dépôt:
+* Initialiser un nouveau dépôt:
  
  `git init`
 
-* Ajouter un fichier à l'index: 
-
- `git add <nomdufichier>`
-
-* Ajouter tous les nouveaux fichiers ou tous les fichiers modifiés depuis leur dernière indexation
-  
- `git add .`
-
-* Récupérer un projet existant:
+* Récupérer un dépôt existant:
 
  `git clone`
 
@@ -62,4 +56,55 @@ Ex.:
  * `git clone gogs@sources.xoransorvor.be:KTDev/KT-FILMS.git`
  * `git clone git@github.com:xoran/KT-Shin.git`
 
+### 4. Enregistrer des modifications dans le dépôt
+
+* Connaître l'état des fichiers du projet
+
+ `git status`
+
+ `git status -s` (sommaire)
+
+* Ajouter un fichier à l'index (staged): 
+
+ `git add <nomdufichier>`
+
+* Ajouter tous les nouveaux fichiers ou tous les fichiers modifiés depuis leur dernière indexation
+  
+ `git add .` / `git add *`
  
+**REMARQUE**:  On peut gérer plus efficacement et globalement les fichiers qui ne doivent pas être suivi par git dans le projet. En créant et  configurant un fichier '.gitignore' (voir le .gitignore qui accompagne ce cours avec de plus amples exemples sur : https://github.com/github/gitignore)
+
+### 5. Inspecter les modifications des fichiers indexés ou non
+
+Commande : `git diff`
+
+**git diff affiche les modifications ligne par ligne**
+
+Cette commande répond aux questions:
+
+* Quel fichier a été modifié et pas encore indexé
+* Quelle modification a été indexée et est prête pour être validée  
+
+Pour visualiser les modifications qui feront partie de la prochaine validation on utilise la commande :
+
+`git diff --cached`
+
+### 6. Valider les modifications
+
+Commande : `git commit`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
