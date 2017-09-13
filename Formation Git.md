@@ -146,8 +146,56 @@ La commande `git log` possède une longue série d'options. Ces dernières perme
 
 Présentation du : `git log --pretty`
 
-Il permet d'obtenir des affichages différents.
+Le paramètre --pretty permet d'obtenir des sorties "custom".
 
+Exemples : 
+* `git log --pretty=oneline` : Affiche un commit par ligne
+* `git log --pretty=format:'...'`
+
+Options de format :
+* `%H` : Somme de contrôle du commit
+* `%h` : Somme de contrôle abrégée du commit 
+* `%T` : Somme de contrôle de l'arborescence
+* `%t` : Somme de contrôle abrégée de l'arborescence
+* `%P` : Somme de contrôle des parents
+* `%p` : Somme de contrôle abrégée des parents
+* `%an` : Nom de l'auteur
+* `%ae` : E-mail l'auteur
+* `%ad` : Date de l'auteur (au format de l'option -date=)
+* `%ar` : Date relative de l'auteur
+* `%cn` : Nom du validateur
+* `%ce` : E-mail du validateur
+* `%cd` : Date du validateur
+* `%cr` : Date relative du validateur
+* `%s` : Sujet
+
+Exemple de git log formaté :
+
+` git log --pretty=format:'%h - %an - %ar : %s'`
+
+`52f2e30 - Kentaro Tatsu - il y a 15 heures : Update Formation Git.md - Chapter 7(full) and 8(begin)`
+`21e3ba2 - Kentaro Tatsu - il y a 3 jours : Update Formation Git.md`
+`3cbf321 - Kentaro Tatsu - il y a 3 jours : Commit 5 first chapters`
+`0f1eae8 - Kentaro Tatsu - il y a 3 jours : Add Formation Git file`
+`95b854f - Kentaro - il y a 3 jours : Initial commit `
+
+### 9 Annuler des actions
+
+* Modifier un commit
+* Désindexer déjà indexé
+* Réinitialiser un fichier modifié
+
+*** !!! Attention certaines modification sont permanentes !!! ***
+
+Il peut arriver que l'on valide(commit) une modification trop tôt en oubliant des fichiers.
+
+Commande pour modifier un commit :
+
+'git commit --amend`
+
+Cette commande reprend l'index du commit précédent.
+L'éditeur s'ouvre avec les modifications et le message.
+Il est possible d'uniquement modifier le message du commit.
 
 
 
