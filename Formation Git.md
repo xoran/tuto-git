@@ -171,13 +171,17 @@ Options de format :
 
 Exemple de git log formaté :
 
-` git log --pretty=format:'%h - %an - %ar : %s'`
+`git log --pretty=format:'%h - %an - %ar : %s'`
 
 `52f2e30 - Kentaro Tatsu - il y a 15 heures : Update Formation Git.md - Chapter 7(full) and 8(begin)`
 `21e3ba2 - Kentaro Tatsu - il y a 3 jours : Update Formation Git.md`
 `3cbf321 - Kentaro Tatsu - il y a 3 jours : Commit 5 first chapters`
 `0f1eae8 - Kentaro Tatsu - il y a 3 jours : Add Formation Git file`
 `95b854f - Kentaro - il y a 3 jours : Initial commit `
+
+Souvent utilisé :
+
+`git log -1 -p` : Affiche les modifications du dernier commit 
 
 ### 9 Annuler des actions
 
@@ -187,6 +191,7 @@ Exemple de git log formaté :
 
 *** !!! Attention certaines modification sont permanentes !!! ***
 
+#### 9.1 Modifier un commit
 Il peut arriver que l'on valide(commit) une modification trop tôt en oubliant des fichiers.
 
 Commande pour modifier un commit :
@@ -197,16 +202,84 @@ Cette commande reprend l'index du commit précédent.
 L'éditeur s'ouvre avec les modifications et le message.
 Il est possible d'uniquement modifier le message du commit.
 
+#### 9.2 Désindexer un fichier déjà indexé
+
+Pour désindexer un fichier (avant de lancer le commit), on utilise la commande suivante:
+
+`git reset HEAD <file>`
+
+#### 9.3 Réinitialiser un fichier modifié
+
+Pour replacer un fichier dans son état  au niveau du précédent checkout : 
+
+`git checkout -- <fichier>`
+
+Suite à cette commande, le fichier sera remis dans l'état dans lequel il était lors du dernier commit et toute modification qui aurait été réalisée entre-temps sera ***IRREMEDIABLEMENT PERDUE !***
 
 
+### 10 Travailler avec des dépôts distants
 
+Pour collaborer sur vos projets Git et pour externaliser ces derniers, nous allons travailler avec des dépôts distants.
+Les dépôts distants hébergent vos projets sur internet ou le réseau de votre entreprise.
+Des droits peuvent être assignés aux dépôts distants (lecture/écriture, lecture seule).
 
+Un projet peut avoir plusieurs dépôt distants.
 
+#### 10.1 Ajouter un dépôt distant 
+Commande: 
 
+`git remote add <nom> <adresse du dépôt distant>`
 
+Ex.:
+`git remote add origin https://github.com/xoran/tuto-git-test.git`
 
+#### 10.2 Récupérer un dépôt distant 
+Commande:
 
+`git fetch <nom du depot distenat>`
 
+Ex.:
+`git fetch origin` 
+
+Cette commande récupère toutes les données que l'on ne possède pas encore du projet.
+Dans le cas où l'on clone un dépôt distant, le dépôt distant est automatiquement ajouté sous le nom "origin".
+le Si dépôt est différent que celui ajouté par défaut, les branches seront ajoutées dans "nom du dépôt distant/master"
+
+#### 10.3 Pousser son travail sur un dépôt distant 
+Commande:
+
+`git push <depot distant> <nom de la branche>`
+
+Ex.:
+`git push origin master`
+
+#### 10.4 Inspecter un dépôt distant 
+Pour avoir plus d'informations sur un dépôt distant.
+
+Commande:
+`git remote show <depot distant>`
+
+Ex.:
+`git remote show origin`
+
+#### 10.4 Retirer et renommer des dépôts distants
+
+Renommer une référence à un dépot :
+
+Commande:
+`git remote rename <ancienne référence> <nouvelle référence>`
+
+Ex.:
+ `git remote rename origin github`
+ 
+ 
+Supprimer une référence à un dépot :
+
+Commande:
+`git remote rm <nom de la référence>`
+ 
+ Ex.:
+ `git remote rm github`
 
 
 
