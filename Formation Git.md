@@ -68,7 +68,7 @@ Ex.:
 
 * Ajouter un fichier à l'index (staged): 
 
- `git add <nomdufichier>`
+ `git add [nomdufichier]`
 
 * Ajouter tous les nouveaux fichiers ou tous les fichiers modifiés depuis leur dernière indexation
   
@@ -114,7 +114,7 @@ Si l'on efface le fichiers sans le faire avec Git (ex.: rm <fichier> (ligne de c
 
 Il faut utiliser la commande suivante:
 
-`git rm <fichier>` : avec cette commande la suppression du fichier est indexée !
+`git rm [fichier]` : avec cette commande la suppression du fichier est indexée !
 
 #### 7.2 Déplacement
 
@@ -122,7 +122,7 @@ Git ne suit pas de façon explicite les mouvements de fichiers et ce même si il
 
 Pour déplacer un fichier il faut utiliser la commande suivante :
 
-`git mv <source/fichier> <destination/fichier>` : cela revient à le supprimer de la source et à le recréer à la destination. 
+`git mv [source/fichier] [destination/fichier]` : cela revient à le supprimer de la source et à le recréer à la destination. 
 
 ### 8 Les Historiques
 
@@ -206,13 +206,13 @@ Il est possible d'uniquement modifier le message du commit.
 
 Pour désindexer un fichier (avant de lancer le commit), on utilise la commande suivante:
 
-`git reset HEAD <file>`
+`git reset HEAD [file]`
 
 #### 9.3 Réinitialiser un fichier modifié
 
 Pour replacer un fichier dans son état  au niveau du précédent checkout : 
 
-`git checkout -- <fichier>`
+`git checkout -- [fichier]`
 
 Suite à cette commande, le fichier sera remis dans l'état dans lequel il était lors du dernier commit et toute modification qui aurait été réalisée entre-temps sera ***IRREMEDIABLEMENT PERDUE !***
 
@@ -228,7 +228,7 @@ Un projet peut avoir plusieurs dépôt distants.
 #### 10.1 Ajouter un dépôt distant 
 Commande: 
 
-`git remote add <nom> <adresse du dépôt distant>`
+`git remote add [nom] [adresse du dépôt distant]`
 
 Ex.:
 `git remote add origin https://github.com/xoran/tuto-git-test.git`
@@ -236,7 +236,7 @@ Ex.:
 #### 10.2 Récupérer un dépôt distant 
 Commande:
 
-`git fetch <nom du depot distenat>`
+`git fetch [nom du depot distant]`
 
 Ex.:
 `git fetch origin` 
@@ -248,7 +248,7 @@ le Si dépôt est différent que celui ajouté par défaut, les branches seront 
 #### 10.3 Pousser son travail sur un dépôt distant 
 Commande:
 
-`git push <depot distant> <nom de la branche>`
+`git push [depot distant] [nom de la branche]`
 
 Ex.:
 `git push origin master`
@@ -257,7 +257,7 @@ Ex.:
 Pour avoir plus d'informations sur un dépôt distant.
 
 Commande:
-`git remote show <depot distant>`
+`git remote show [dépot distant]`
 
 Ex.:
 `git remote show origin`
@@ -267,7 +267,7 @@ Ex.:
 Renommer une référence à un dépot :
 
 Commande:
-`git remote rename <ancienne référence> <nouvelle référence>`
+`git remote rename [ancienne référence] [nouvelle référence]`
 
 Ex.:
  `git remote rename origin github`
@@ -276,11 +276,27 @@ Ex.:
 Supprimer une référence à un dépot :
 
 Commande:
-`git remote rm <nom de la référence>`
+`git remote rm [nom de la référence]`
  
  Ex.:
  `git remote rm github`
 
+
+### 11 Les Etiquettes (tags)
+
+Git donne la possibilité d'étiqueter un certain état dans l'historique comme important.
+Généralement on utilise les étiquettes pour marquer les différentes versions d'un projet.
+
+#### 11.1 Lister les étiquettes
+
+Commande:
+`git tag`
+
+Retourne la liste des étiquettes par ordre alphabétique.
+
+Pour effectuer une recherche:
+`git tag -l '[chaibe de caractère]*'`
+Les caractère * est autorisé.
 
 
 
