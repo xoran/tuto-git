@@ -2,6 +2,12 @@
 ## Alain Kelleter
 alain@ktdev.pro - https://www.ktdev.pro
 
+Sources du cours :
+
+* [tuto-git/github](https://github.com/xoran/tuto-git) (le cours)
+* [tuto-git-test/github](https://github.com/xoran/tuto-git-test) (dépôt fictif pour tester les commandes / tests)
+
+---
  
 ### 1. Installation
 Simple à réaliser quelque soit la plateforme sur laquelle on travaille (GNU/Linux / Windows / MacOS)
@@ -105,7 +111,7 @@ Option :
 
 Une fois l'opération de commit terminée ce dernier possèdera un identifiant (ID) au format SHA-1 (une version raccourcie est affichée).
 
-### 7. Supprimer ou deplacer des fichiers
+### 7. Supprimer ou déplacer des fichiers
 #### 7.1 Suppression 
 
 Pour supprimer des fichiers de Git, il faut les supprimer de la zone d'Index et ensuite valider (commit).
@@ -124,7 +130,7 @@ Pour déplacer un fichier il faut utiliser la commande suivante :
 
 `git mv [source/fichier] [destination/fichier]` : cela revient à le supprimer de la source et à le recréer à la destination. 
 
-### 8 Les Historiques
+### 8. Les Historiques
 
 Pour consulter les historiques on utilise la commande:
 
@@ -183,7 +189,7 @@ Souvent utilisé :
 
 `git log -1 -p` : Affiche les modifications du dernier commit 
 
-### 9 Annuler des actions
+### 9. Annuler des actions
 
 * Modifier un commit
 * Désindexer déjà indexé
@@ -217,7 +223,7 @@ Pour replacer un fichier dans son état  au niveau du précédent checkout :
 Suite à cette commande, le fichier sera remis dans l'état dans lequel il était lors du dernier commit et toute modification qui aurait été réalisée entre-temps sera ***IRREMEDIABLEMENT PERDUE !***
 
 
-### 10 Travailler avec des dépôts distants
+### 10. Travailler avec des dépôts distants
 
 Pour collaborer sur vos projets Git et pour externaliser ces derniers, nous allons travailler avec des dépôts distants.
 Les dépôts distants hébergent vos projets sur internet ou le réseau de votre entreprise.
@@ -281,8 +287,9 @@ Commande:
  Ex.:
  `git remote rm github`
 
+Plus d'infos sur le travail avec les dépôts distants : [ICI](https://git-scm.com/book/fr/v1/Les-bases-de-Git-Travailler-avec-des-d%C3%A9p%C3%B4ts-distants) 
 
-### 11 Les Etiquettes (tags)
+### 11. Les Etiquettes (tags)
 
 Git donne la possibilité d'étiqueter un certain état dans l'historique comme important.
 Généralement on utilise les étiquettes pour marquer les différentes versions d'un projet.
@@ -295,9 +302,56 @@ Commande:
 Retourne la liste des étiquettes par ordre alphabétique.
 
 Pour effectuer une recherche:
-`git tag -l '[chaibe de caractère]*'`
-Les caractère * est autorisé.
+`git tag -l '[chaîne de caractère]*'`
+
+Le caractère wildcard '*' est autorisé.
+
+#### 11.2 Créer des étiquettes
+
+Git utilise deux types d'étiquettes:
+
+* a. Les étiquettes légères
+* b. Les étiquette annotées
+
+##### a. Les étiquettes légère
+Une étiquette légère ressemble beaucoup à une branche qui ne change pas, c'est juste un pointeur sur un commit spécifique.
+Elles se réduisent à stocker la somme de contrôle d'un commit dans un fichier, aucune autre information n'est conservée.
+Pour créer une étiquette légère, on utilise `git tag` sans option :
+Ex.:
+`git tag v1.4-lw`
+
+##### b. Les étiquettes annotées
+Les étiquettes annotées, par contre sont stockées en tant qu'objets à part entière dans la base de données de Git.
+Elles ont une somme de contrôle, contiennent le nom et l'adresse e-mail du créateur, la date, un message d'étiquetage et peuvent être signées et vérifiées avec GNU Privacy Guard (GPG).
+Créer des étiquettes annotées est simple avec Git. Le plus simple est de spécifier l'option -a à la commande tag :
+Ex.:
+`git tag -a v1.2.m -m 'Annotation'`
+
+***Remarque*** : On peut étiqueter les anciens commits et donc faire de l'étiquetage 'après coup'
+
+#### 11.3 Partager les étiquettes
+
+Par défaut, la commande git push ne transfère pas les étiquettes vers les serveurs distants. 
+Il faut explicitement pousser les étiquettes après les avoir créées localement. 
+Ce processus s'apparente à pousser des branches distantes — vous pouvez lancer git push origin [nom-du-tag].
+
+`git push origin v1.5`
+
+Si vous avez de nombreuses étiquettes que vous souhaitez pousser en une fois, vous pouvez aussi utiliser l'option `--tags` avec la commande git push.
+
+#### 11.4 Extraire une étiquette
+
+Au prélable il faut récupérer toutes les données du dépôt distant avec `git pull` ou `git fetch`
+Pour se placer à la position d'un commit étiqueté on lance la commande suivante :
+Ex.:
+`git checkout -b v1.1.0`
+
+Cette commande va créer une nouvelle branche et nous placer dedans.
+Grâce à ce mécanisme nous pouvons naviguer à travers les différentes versions de notre projet.
 
 
+Plus d'infos sur les étiquettes : [ICI](https://git-scm.com/book/fr/v1/Les-bases-de-Git-%C3%89tiquetage) 
+
+### 12 Les Branches
 
 
