@@ -1,9 +1,7 @@
 # tuto-git
 ---
 Course: Git the bases
-
 Quick and succinct information on Git bases
-
 ***This course is written in French language***
 
 
