@@ -10,7 +10,7 @@ Sources du cours :
 ---
  
 ### 1. Installation
-Simple à réaliser quelque soit la plateforme sur laquelle on travaille (GNU/Linux / Windows / MacOS)
+Simple à réaliser quelque soit la plateforme sur laquelle on travail (GNU/Linux / Windows / MacOS)
 
 ### 2. Configuration
 La configuration de Git peut s'étendre sur 3 niveaux.
@@ -40,37 +40,37 @@ Ex.:
 
 ON PEUT VERIFIER LA CONFIGURATION AVEC LA COMMANDE :
 
-`git config --list`
+`$ git config --list`
 
 ### 3. Mise en place d'un premier dépôt
 
 #### 3.1 Créer un dépôt Git
 * Initialiser un nouveau dépôt:
  
- `git init`
+ `$ git init`
 
 * Récupérer un dépôt existant:
 
- `git clone`
+ `$ git clone`
 
 Via protocol http/https : 
 Ex.:
  
- * `git clone http://sources.xoransorvor.be:3000/KTDev/KT-FILMS.git`
+ * `$ git clone http://sources.xoransorvor.be:3000/KTDev/KT-FILMS.git`
  
 Ou via le protocol ssh : 
 Ex.:
  
- * `git clone gogs@sources.xoransorvor.be:KTDev/KT-FILMS.git`
- * `git clone git@github.com:xoran/KT-Shin.git`
+ * `$ git clone gogs@sources.xoransorvor.be:KTDev/KT-FILMS.git`
+ * `$ git clone git@github.com:xoran/KT-Shin.git`
 
 ### 4. Enregistrer des modifications dans le dépôt
 
 * Connaître l'état des fichiers du projet
 
- `git status`
+ `$ git status`
 
- `git status -s` (sommaire)
+ `$ git status -s` (sommaire)
 
 * Ajouter un fichier à l'index (staged): 
 
@@ -84,7 +84,7 @@ Ex.:
 
 ### 5. Inspecter les modifications des fichiers indexés ou non
 
-Commande : `git diff`
+Commande : `$ git diff`
 
 **git diff affiche les modifications ligne par ligne**
 
@@ -95,11 +95,11 @@ Cette commande répond aux questions:
 
 Pour visualiser les modifications qui feront partie de la prochaine validation on utilise la commande :
 
-`git diff --cached`
+`$ git diff --cached`
 
 ### 6. Valider les modifications
 
-Commande : `git commit`
+Commande : `$ git commit`
 
 Une fois que l'index(staged) est dans un état qui convient au développeur, on peut valider les modifications.
 
@@ -134,7 +134,7 @@ Pour déplacer un fichier il faut utiliser la commande suivante :
 
 Pour consulter les historiques on utilise la commande:
 
-`git log`
+`$ git log`
 
 La commande `git log` possède une longue série d'options. Ces dernières permettent de paramètrer `git log` de façon à afficher avec précision sa sortie.
 
@@ -150,7 +150,7 @@ La commande `git log` possède une longue série d'options. Ces dernières perme
 * `--pretty` : Affiche les commit dans un format alternatif. Les formats incluent oneline, short, full, fuller et format(avec lequel on peut spécifier sont propre format)
 * `--oneline` : Option de convenance correspondant à : --pretty=oneline --abbrev-commit
 
-Présentation du : `git log --pretty`
+Présentation du : `$ git log --pretty`
 
 Le paramètre --pretty permet d'obtenir des sorties "custom".
 
@@ -177,7 +177,7 @@ Options de format :
 
 Exemple de git log formaté :
 
-`git log --pretty=format:'%h - %an - %ar : %s'`
+`$ git log --pretty=format:'%h - %an - %ar : %s'`
 
 `52f2e30 - Kentaro Tatsu - il y a 15 heures : Update Formation Git.md - Chapter 7(full) and 8(begin)`
 `21e3ba2 - Kentaro Tatsu - il y a 3 jours : Update Formation Git.md`
@@ -187,7 +187,7 @@ Exemple de git log formaté :
 
 Souvent utilisé :
 
-`git log -1 -p` : Affiche les modifications du dernier commit 
+`$ git log -1 -p` : Affiche les modifications du dernier commit 
 
 ### 9. Annuler des actions
 
@@ -212,13 +212,13 @@ Il est possible d'uniquement modifier le message du commit.
 
 Pour désindexer un fichier (avant de lancer le commit), on utilise la commande suivante:
 
-`git reset HEAD [file]`
+`$ git reset HEAD [file]`
 
 #### 9.3 Réinitialiser un fichier modifié
 
 Pour replacer un fichier dans son état  au niveau du précédent checkout : 
 
-`git checkout -- [fichier]`
+`$ git checkout -- [fichier]`
 
 Suite à cette commande, le fichier sera remis dans l'état dans lequel il était lors du dernier commit et toute modification qui aurait été réalisée entre-temps sera ***IRREMEDIABLEMENT PERDUE !***
 
@@ -234,18 +234,18 @@ Un projet peut avoir plusieurs dépôt distants.
 #### 10.1 Ajouter un dépôt distant 
 Commande: 
 
-`git remote add [nom] [adresse du dépôt distant]`
+`$ git remote add [nom] [adresse du dépôt distant]`
 
 Ex.:
-`git remote add origin https://github.com/xoran/tuto-git-test.git`
+`$ git remote add origin https://github.com/xoran/tuto-git-test.git`
 
 #### 10.2 Récupérer un dépôt distant 
 Commande:
 
-`git fetch [nom du depot distant]`
+`$ git fetch [nom du depot distant]`
 
 Ex.:
-`git fetch origin` 
+`$ git fetch origin` 
 
 Cette commande récupère toutes les données que l'on ne possède pas encore du projet.
 Dans le cas où l'on clone un dépôt distant, le dépôt distant est automatiquement ajouté sous le nom "origin".
@@ -254,38 +254,38 @@ le Si dépôt est différent que celui ajouté par défaut, les branches seront 
 #### 10.3 Pousser son travail sur un dépôt distant 
 Commande:
 
-`git push [depot distant] [nom de la branche]`
+`$ git push [depot distant] [nom de la branche]`
 
 Ex.:
-`git push origin master`
+`$ git push origin master`
 
 #### 10.4 Inspecter un dépôt distant 
 Pour avoir plus d'informations sur un dépôt distant.
 
 Commande:
-`git remote show [dépot distant]`
+`$ git remote show [dépot distant]`
 
 Ex.:
-`git remote show origin`
+`$ git remote show origin`
 
 #### 10.4 Retirer et renommer des dépôts distants
 
 Renommer une référence à un dépot :
 
 Commande:
-`git remote rename [ancienne référence] [nouvelle référence]`
+`$ git remote rename [ancienne référence] [nouvelle référence]`
 
 Ex.:
- `git remote rename origin github`
+ `$ git remote rename origin github`
  
  
 Supprimer une référence à un dépot :
 
 Commande:
-`git remote rm [nom de la référence]`
+`$ git remote rm [nom de la référence]`
  
- Ex.:
- `git remote rm github`
+Ex.:
+`$ git remote rm github`
 
 Plus d'infos sur le travail avec les dépôts distants : [ICI](https://git-scm.com/book/fr/v1/Les-bases-de-Git-Travailler-avec-des-d%C3%A9p%C3%B4ts-distants) 
 
@@ -297,12 +297,12 @@ Généralement on utilise les étiquettes pour marquer les différentes versions
 #### 11.1 Lister les étiquettes
 
 Commande:
-`git tag`
+`$ git tag`
 
 Retourne la liste des étiquettes par ordre alphabétique.
 
 Pour effectuer une recherche:
-`git tag -l '[chaîne de caractère]*'`
+`$ git tag -l '[chaîne de caractère]*'`
 
 Le caractère wildcard '*' est autorisé.
 
@@ -318,14 +318,14 @@ Une étiquette légère ressemble beaucoup à une branche qui ne change pas, c'e
 Elles se réduisent à stocker la somme de contrôle d'un commit dans un fichier, aucune autre information n'est conservée.
 Pour créer une étiquette légère, on utilise `git tag` sans option :
 Ex.:
-`git tag v1.4-lw`
+`$ git tag v1.4-lw`
 
 ##### b. Les étiquettes annotées
 Les étiquettes annotées, par contre sont stockées en tant qu'objets à part entière dans la base de données de Git.
 Elles ont une somme de contrôle, contiennent le nom et l'adresse e-mail du créateur, la date, un message d'étiquetage et peuvent être signées et vérifiées avec GNU Privacy Guard (GPG).
 Créer des étiquettes annotées est simple avec Git. Le plus simple est de spécifier l'option -a à la commande tag :
 Ex.:
-`git tag -a v1.2.m -m 'Annotation'`
+`$ git tag -a v1.2.m -m 'Annotation'`
 
 ***Remarque*** : On peut étiqueter les anciens commits et donc faire de l'étiquetage 'après coup'
 
@@ -335,7 +335,7 @@ Par défaut, la commande git push ne transfère pas les étiquettes vers les ser
 Il faut explicitement pousser les étiquettes après les avoir créées localement. 
 Ce processus s'apparente à pousser des branches distantes — vous pouvez lancer git push origin [nom-du-tag].
 
-`git push origin v1.5`
+`$ git push origin v1.5`
 
 Si vous avez de nombreuses étiquettes que vous souhaitez pousser en une fois, vous pouvez aussi utiliser l'option `--tags` avec la commande git push.
 
@@ -344,7 +344,7 @@ Si vous avez de nombreuses étiquettes que vous souhaitez pousser en une fois, v
 Au prélable il faut récupérer toutes les données du dépôt distant avec `git pull` ou `git fetch`
 Pour se placer à la position d'un commit étiqueté on lance la commande suivante :
 Ex.:
-`git checkout -b v1.1.0`
+`$ git checkout -b v1.1.0`
 
 Cette commande va créer une nouvelle branche et nous placer dedans.
 Grâce à ce mécanisme nous pouvons naviguer à travers les différentes versions de notre projet.
@@ -354,4 +354,42 @@ Plus d'infos sur les étiquettes : [ICI](https://git-scm.com/book/fr/v1/Les-base
 
 ### 12 Les Branches
 
+Créer une branche signifie diverger de la ligne principale de développement et continuer à travailler sans se préoccuper de cette ligne principale.
+La méthode de Git pour gérer les branches est particulièrement légère, permettant de réaliser des embranchements quasi instantanément et de basculer entre les branches généralement aussi rapidement. Git encourage à travailler avec des méthodes qui privilégient la création et la fusion de branches, jusqu'à plusieurs fois par jour.
+
+Plus d'infos sur ce qu'est une branche : [ICI](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)  
+
+#### 12.1 Créer une nouvelle branche
+Commande:
+`$ git branch [nom de la branche]`
+Ex.:
+`$ git branch testing`
+
+#### 12.2 Changer de branche
+Commande:
+`$ git checkout [nom de la branche]`
+
+Ex.:
+`$ git checkout testing`
+
+Cela à pour effet de déplacer le HEAD(pointeur) sur la branche 'testing'.
+
+Si à ce stade on modifie le projet en ajoutant un fichier (ex.: testing-file.txt), on l'ajoute à l'index et on valide la modification(commit).
+Le contenu de la branche testing va à partir de maintenant différer de la branche master du projet.
+
+Pour le vérifier, il suffir de revenir sur la branche master avec un:
+`git checkout master`
+
+Effectuez un `$ ls` pour lister le contenu du répertoire et vous ne verrez pas apparaître le fichier 'testing-file.txt', ce dernier ayant été créé sur la branche 'testing'.
+Cela déplace le HEAD(pointeur) sur la branche 'master et replace le répertoire de votre projet dans l'état du snaphot pointé par la branche master.
+
+Test:  Ajoutons un ficher sur la branche master.
+`$ touch master-file1.txt`
+
+Affichons l'état des branches du projet :
+Au format texte :
+`$ git log --oneline --decorate --graph --all`
+
+Sur une interface graphique :
+`gitk --all`
 
