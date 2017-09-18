@@ -393,3 +393,70 @@ Au format texte :
 Sur une interface graphique :
 `gitk --all`
 
++++++++++++++++++++
+MERGING A FAIRE
++++++++++++++++++++
+
+#####DEBUT MISE EN SITUATION 
+
+1. On décide de travailler sur le problème(issue en anglais), on crée une branche spécifique et on se place dedans.
+
+    `$ git checkout -b issue01`  - *issue01* est un terme arbitrairement choisi
+
+    Est équivalent à :
+    `$ git branch issue01`
+    `$ git checkout issue01`
+
+2. On effectue des modifications nécessaires pour régler le problème et on les valide (commit) :
+
+    `$ git commit -a -m 'Update file3.txt: ajout constante de PI et fonction KTcirc() #issue01'`
+
+3. On reçoit une demande par tél il faut modifier l'application
+     On rebascule sur la branche master :
+     `$ git checkout master `
+     
+     On développe modification en créant une nouvelle branche :
+     `$ git checkout -b hotfix`  - *hotfix* est un terme arbitrairement choisi
+     
+     On modifie le code et on valide :
+     `$ touch file6.txt` (+ édition  du code du fichier)
+     `$ git add file6.txt`
+     `$ git commit -m 'Create HOTFIX on file6.txt'` 
+     
+4. On souhaite fusionner le HOTFIX sur la branche master
+     
+     On se place sur la branche master :      
+     `$ git checkout master`
+     
+     On fusionne les deux branches :     
+     `$ git merge  hotfix`
+     
+     Ce type de merge est le plus simple à réaliser et on l'appel le **Fast-Forward**.
+     Git déplace son pointeur (HEAD) et le fait avancer sur le commit HOTFIX
+
+     On peut dés lors supprimer la branche hotfix avec la commande suivante :
+     `$ git branch -d hotfix`
+     
+5. On retourne sur notre branche *issue01* pour terminer notre travail :
+     `$ git checkout issue01`
+    
+    On termine nos modifications (édition de file3.txt et enregistrement) et on valide : 
+    `git commit -a -m 'issue01 - fixed'`
+
+    On décide de fusionner issue01 sur master (fusion un peu spéciale vu qu'il y a eu différenciation entre les deux branches) :  			
+    
+    On se place sur master :
+    `$ git checkout master`
+    
+    On fusionne les deux branches :
+    `$ git merge issue01`
+    
+    Git ouvre alors votre éditeur par défaut parce qu'il va créer lui même un commit de fusion (merge) pour fusionner le code des deux branches.
+    
+    Git à fait ce que l'on, appel un **Recursive Merge**
+    
+    
+    
+    
+
+
