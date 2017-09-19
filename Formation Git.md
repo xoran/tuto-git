@@ -372,7 +372,7 @@ Commande:
 Ex.:
 `$ git checkout testing`
 
-Cela à pour effet de déplacer le HEAD(pointeur) sur la branche 'testing'.
+Cela à pour effet de déplacer le HEAD (pointeur) sur la branche 'testing'.
 
 Si à ce stade on modifie le projet en ajoutant un fichier (ex.: testing-file.txt), on l'ajoute à l'index et on valide la modification(commit).
 Le contenu de la branche testing va à partir de maintenant différer de la branche master du projet.
@@ -392,4 +392,21 @@ Au format texte :
 
 Sur une interface graphique :
 `gitk --all`
+
+#### 12.3 Les branches - Fusions
+Pour présenter les fusions de branches, nous allons réaliser quelques mises en situations (usecase).
+
+##### Mise en situation
+-- **1ère mise en situation**
+
+1. On développe une application
+2. On crée une branche pour développer une nouvelle fonctionnalité
+3. On commence à travailler sur cette nouvelle fonctionnalité
+4. On demande nous demande de corriger une faille critique sur la production
+5. On bascule sur la branche de production
+6. On crée une nouvelle branche pour réaliser le correctif
+7. Après avoir testé le correctif on fusionne la branche du correctif et on pousse sur la production
+8. On rebascule sur la branche sur laquelle on travaillait au départ
+
+
 
