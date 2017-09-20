@@ -396,20 +396,22 @@ Sur une interface graphique :
 #### 12.3 Les branches - Fusions
 Pour présenter les fusions de branches, nous allons réaliser quelques mises en situations (usecase).
 
-##### Mise en situation
+##### Mises en situation
+
 -- **1ère mise en situation**
 
 1. On développe une application
-2. On crée une branche pour développer une nouvelle fonctionnalité
-3. On commence à travailler sur cette nouvelle fonctionnalité
-4. On demande nous demande de corriger une faille critique sur la production
+2. On crée une nouvelle branche pour travailler sur un problème
+3. On effectue des modifications et on les valide
+4. On  nous demande de corriger une faille critique sur la production
 5. On bascule sur la branche de production
 6. On crée une nouvelle branche pour réaliser le correctif
 7. Après avoir testé le correctif on fusionne la branche du correctif et on pousse sur la production
 8. On rebascule sur la branche sur laquelle on travaillait au départ
+9. On termine notre travail sur le problème et une fois le problème réglé on effectue une fusion
 
 
-#####DEBUT MISE EN SITUATION 
+**DEBUT MISE EN SITUATION **
 
 1. On décide de travailler sur le problème(issue en anglais), on crée une branche spécifique et on se place dedans.
 
@@ -463,8 +465,116 @@ Pour présenter les fusions de branches, nous allons réaliser quelques mises en
     On fusionne les deux branches :
     `$ git merge issue01`
     
-    Git ouvre alors votre éditeur par défaut parce qu'il va créer lui même un commit de fusion (merge) pour fusionner le code des deux branches.
+    Git ouvre alors votre éditeur par défaut parce qu'il va créer lui même un commit de fusion (merge) et créer un instantané qui sera le résultat de  la fusion des deux branches.
     
-    Git à fait ce que l'on, appel un **Recursive Merge**
+    Git à fait ce que l'on, appel un **Merge commit** ou en français un commit de fusion.
     
+    
+    -- **2ème mise en situation**
+    Cas où l'on modifie un même fichier dans 2 branches différentes qui vont devoir être fusionnées. Dans ce cas, il est possible que Git n'arrive pas à faire la fusion seul.
+    Git va alors générer un conflit. Nous allons devoir régler le conflit à la main... .
+    Nous allons tester la **fusion à 3 sources**.
+        
+    **DEBUT MISE EN SITUATION**
+    
+    On crée une branche issue02 et on se place dedans:
+    `$ git checkout -b issue02`
+    
+    On crée un fichier issue02.txt et on valide les modifications
+    `$ touch issue02.txt` + éditer le fichier et ajouter du contenu
+    `$ git add issue02.txt`
+    `$ git commit -m 'Add issue02.txt' `
+	
+   On repasse sur la branche master et on créer un fichier du même nom avec un autre contenu:
+   `$ git checkout master`
+   `$ git touch issue02.txt` + éditer le fichier et ajouter du contenu différent
+   `$ git add issue02.txt`
+   `$ git commit -m 'Add issue02.txt onmaster branch'`
+   
+   Ensuite on essaie de fusionner les deux branches:
+   `$ git merge issue02`
+   
+   Réponse de Git:
+>   Fusion automatique de issue02.txt
+>   CONFLIT (ajout/ajout) : Conflit de fusion dans issue02.txt
+>   La fusion automatique a échoué ; réglez les conflits et validez le résultat.
+   
+   On édite le fichier et on garde le code souhaité, on supprime  également les balises que Git à ajouté dans le fichier:
+   Supprimer les balises : 
+   * <<<<<<<<<
+   * HEAD
+   * =========
 
+   Une fois l'édition du fichier terminé, vérifiez le status du projet:
+   `$  git status`
+   
+   Et comme le demande Git, effectuez une commande `add` pour marquer le conflit comme résolu:
+   `$ git add issue02.txt`
+   `$ git status`  -  La commande  retournera que le conflit est résolu
+   `$ git commit -a -m 'Fusion master/issue02 for issue02 patch'`  - Validez les modifications
+   `$ git branch -d issue02`- Suppression de la branche issue02 qui n'est plus nécessaire
+   
+  Le conflit est réglé et la fusion en ordre.
+   
+#### 12.4 Les branches - Gestion des branches 
+
+##### Lister les branches
+
+`$ git branch` sans argument permet de lister les branches en local:
+`$ git branch - v` pour obtenir plus d'informations (mode verbeux)
+`$ git branch --merged` pour obtenir la liste des branches déjà fusionnées
+`$ git branch --no-merged`pour obtenir la liste des branches pas encore fusionnées
+`$ git branch -a ` pour obtenir la liste des branches distantes
+  
+##### Supprimer une branche
+
+`$  git branch -d [nom de la branche]`
+`$  git branch -D [nom de la branche]` pour forcer la suppression (par ex. si la branche n'était pas encore fusionnée)
+
+
+#### 12.5 Les branches - Travailler avec les branches 
+
+Nous allons distinguer ici le travail avec deux type de branches:
+
+1. Les branches dites au long cours
+2. Les branches thématiques
+
+
+##### Les branches au long cours
+
+Avec la fusion à 3 sources fusionner une même branche plusieurs fois sur une longue période est très aisé et pratique.
+
+Cela signifie que l'on peut avoir plusieurs branches ouvertes en permanence pour différentes phases dans le cycle de notre projet, pour ensuite les fusionner sans que cela pose de grandes difficultés.
+
+De nombreux développeurs utilisent Git avec ce type d'approche. Il s'agit par exemple de n'avoir que du code stable et testé dans la branche master (qui au passage peut porter un autre nom ("prod" par ex.). 
+
+Parallèlement à cette branche on peut avoir d'autres branches (ex. "dev", "next",...), ces branches accueillent les développements en cours qui fonc l'objet de tests de stabilité. Quand la branche de développement devient stable, on fait passer la branche de production à ce niveau.
+
+On peut gérer différents niveaux de stabilité. Sur de gros projets on crée des branches dites "proposed". Ce sont des branches parallèles qui ne sotn pas encore intégrées aux branches "dev" et "prod", elles contiennent généralement des fonctionnalités en attente qui seront intégrée par après dans "dev" et qui après une séries de tests pourront finir dans la production. 
+
+
+##### Les branches thématiques
+
+Les branches thématiques sont utiles quelque soit la taille du projet. Elles ont une courte durée de vie. Elles sont généralement créées pour gérer une fonctinnalité ou une tâche particulière (ex. les patch, fix et autres issues) comme nous l'avons pratiqué lors de nos exercices précédent.
+
+
+#### 12.6 Les branches - Introduction aux branches distantes
+
+Les branches distantes sont des références(pointeurs) à l'état des branches sur votre dépôt distant. Ce sont des branches locales qu'on ne peut pas modifier ; elles sont modifiées automatiquement lors de communications réseau. Les branches distantes agissent comme des marques-pages pour vous aider à vous souvenir de l'état de votre dépôt distant lorsque vous vous y êtes connecté. **Les branches distantes sont des références (pointeurs) vers l'état des branches sur votre dépôt distant**.
+
+Pour obtenir la liste complète de ces références : 
+`$ git ls-remote [remote name]` (ex.:`$git ls-remote origin`)
+
+Elles prennent la forme de (distant)/(branche). Par exemple, si vous souhaitiez visualiser l'état de votre branche master sur le dépôt distant origin lors de votre dernière communication, il vous suffit de vérifier la branche origin/master. Si vous étiez en train de travailler avec un collègue et qu'il a mis à jour la branche prob53, vous pourriez avoir votre propre branche prob53 ; mais la branche sur le serveur pointerait sur le commit de origin/prob53.
+
+Cela peut paraître déconcertant, alors éclaircissons les choses par un exemple. Supposons que vous avez un serveur Git sur le réseau à l'adresse git.notresociete.com. Si vous clonez à partir de ce serveur, Git le nomme automatiquement origin et en tire tout l'historique, crée un pointeur sur l'état actuel de la branche master et l'appelle localement origin/master ; vous ne pouvez pas la modifier. Git vous crée votre propre branche master qui démarre au même commit que la branche master d'origine, pour que vous puissiez commencer à travailler.
+
+Les branches locales ne sont pas automatiquement synchronisées sur les sereurs distants. Vous devez "pousser" (push) explicitement les branches que vous souhaitez partager.
+
+Pour pousser une branche :
+
+`$ git push [distant] [branche]` (ex.: `$ git push origin master`)
+
+
+
+ 
