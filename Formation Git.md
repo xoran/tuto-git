@@ -571,10 +571,51 @@ Cela peut paraître déconcertant, alors éclaircissons les choses par un exempl
 
 Les branches locales ne sont pas automatiquement synchronisées sur les sereurs distants. Vous devez "pousser" (push) explicitement les branches que vous souhaitez partager.
 
-Pour pousser une branche :
+##### Quelques commandes
 
-`$ git push [distant] [branche]` (ex.: `$ git push origin master`)
+Pour lister les branches distantes : 
+`$ git branch -a`
+
+Pour ajouter une branche distante :
+`$ git remote add [nomcourt] [url]`
+
+Ex.: `$ git remote add origin https://github.com/xoran/tuto-git.git` 
+
+Pour pousser une branche ou plusieurs(optionnels et peu courant) :
+`$ git push [distant] [branche] [branche2] [...]` (si git indique un problème de référence remplacer [branche] par HEAD:[branche])
+
+Ex.: `$ git push origin master`
+
+Pour récupérer une branche distante sur mon dépôt distant (branche que vous ne possédez pas encore - ajoutée par un collègue par ex.) :
+`$ git fetch`
+Ensuite vous pourrez créer cette branche en local et la faire pointer sur la branche distante :
+ Ex.: `$ git checkout -b issue03 origin/issue03.`
+
+** IMPORTANT ! **
+** Gardez à l'esprit que lorsque vous récupérez une nouvelle branche depuis un serveur distant, vous ne créé pas automatiquement une copie locale éditable, mais seulement un pointeur sur la branche distante qui n'est pas directement modifiable. ** 
+
+Si vous souhaitez fusionner cette branche sur votre branche de travail local :
+`$ git merge [distant]/[branche]`
+
+Ex.: `$ git merge origin/issue03`
+
+Dans le cas contraire, si vous ne souhaitez pas fusionner la branche distante avec votre travail, vous pouvez créer une branche et copier la branche distante dedans :
+
+Ex.: `$ git checkout -b issue03 origin/issue03`
+
+Pour supprimer une branche distante :
+`$ git push  [nom distant] [:nom branche distante]`
+
+Ex.: `$ git push origin :issue01`
 
 
+#### 12.7 Les branches - Suivre les branches
 
- 
+L'extraction d'une branche locale à partir d'une branche distante crée automatiquement ce qu'on appelle une branche de suivi. Les branches de suivi sont des branches locales qui sont en relation directe avec une branche distante. Si vous vous trouvez sur une branche de suivi et que vous tapez `$ git push`, Git sélectionne automatiquement le serveur vers lequel pousser vos modifications. De même, `$ git pull` sur une de ces branches récupère toutes les références distantes et fusionne automatiquement la branche distante correspondante dans la branche actuelle.
+
+Lorsque vous clonez un dépôt, il crée généralement automatiquement une branche master qui suit *origin/master*. C'est pourquoi les commandes *git push* et *git pull* fonctionnent directement sans plus de paramétrage. Vous pouvez néanmoins créer d'autres branches de suivi si vous le souhaitez, qui ne suivront pas *origin* ni la branche *master*.
+
+Un cas d'utilisation simple est l'exemple du sou-chapitre précédent, en lançant :
+`$ git checkout -b [branche] [nomdistant]/[branche]`
+
+
