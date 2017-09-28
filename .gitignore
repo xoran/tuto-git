@@ -11,6 +11,6 @@
 
 # Les fichiers commençant par '.' sauf '.htaccess' et '.gitignore'
 #
-*.*
+#*.*
 !.htaccess
 !.gitignore
