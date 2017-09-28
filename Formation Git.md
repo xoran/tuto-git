@@ -609,13 +609,138 @@ Pour supprimer une branche distante :
 Ex.: `$ git push origin :issue01`
 
 
-#### 12.7 Les branches - Suivre les branches
+#### 12.7 Les branches - Suivre les branches distantes
+
 
 L'extraction d'une branche locale à partir d'une branche distante crée automatiquement ce qu'on appelle une branche de suivi. Les branches de suivi sont des branches locales qui sont en relation directe avec une branche distante. Si vous vous trouvez sur une branche de suivi et que vous tapez `$ git push`, Git sélectionne automatiquement le serveur vers lequel pousser vos modifications. De même, `$ git pull` sur une de ces branches récupère toutes les références distantes et fusionne automatiquement la branche distante correspondante dans la branche actuelle.
 
 Lorsque vous clonez un dépôt, il crée généralement automatiquement une branche master qui suit *origin/master*. C'est pourquoi les commandes *git push* et *git pull* fonctionnent directement sans plus de paramétrage. Vous pouvez néanmoins créer d'autres branches de suivi si vous le souhaitez, qui ne suivront pas *origin* ni la branche *master*.
 
-Un cas d'utilisation simple est l'exemple du sou-chapitre précédent, en lançant :
+Un cas d'utilisation simple est l'exemple du sous-chapitre précédent, en lançant :
 `$ git checkout -b [branche] [nomdistant]/[branche]`
 
+La commande `git push ` sans option sélectionne automatiquement le serveur vers lequel "pousser" vos modifications.
+Avec options : `$git psuh origin/master`
 
+Pour connaître la branche suivie :
+`$ git branch -vv`
+
+Pour changer la branche suivie : 
+`$ git branch -u origin/[nom de la nouvelle branche]`
+ou
+`$ git --set-upstream-to origin/[nom de la nouvelle branche]`
+
+
+#### 12.8 Tirer une branche distante
+ 
+La commande `git fetch` récupère l'ensemble des changements présents sur le serveur, mais elle ne modifie en rien votre répertoire de travail.
+Il faut faire un `git merge` pour fusionner les nouveaux changements.
+
+La commande `git pull` fait un `git fetch`suivi d'un `git merge` tout de suite après.
+
+
+#### 12.9  Suppression des branches distantes
+
+Commandes : 
+`$ git push origin --delete [nom de la branche]`
+ou
+`$ git push origin :[nom de la branche]`
+
+
+#### 12.10 Rebaser (Rebasing)
+
+Dans Git, il y a deux façons d'intégrer les modifications d'une branche dans une autre : en fusionnant (*merge*) et en rebasant (*rebase*). Dans ce chapitre, vous apprendrez la signification de rebaser, comment le faire, pourquoi c'est un outil plutôt ébouriffant et dans quels cas il est déconseillé de l'utiliser.
+
+##### Les bases
+
+Si vous revenez à un exemple précédent du chapitre sur la fusion (voir la figure 12.10-1), vous remarquerez que votre travail a divergé et que vous avez ajouté des commits sur deux branches différentes.
+
+![Historique divergent initial](img/histo-divergent-init.png  "Historique divergent initial")
+*Figure 12.10-1. Historique divergent initial*
+
+Comme nous l'avons déjà expliqué, le moyen le plus simple pour intégrer ensemble ces branches est la fusion via la commande merge. Cette commande réalise une fusion à trois branches entre les deux derniers instantanés de chaque branche (C3 et C4) et l'ancêtre commun le plus récent (C2), créant un nouvel instantané (et un commit), comme montré par la figure 12.10-2.
+
+![Fusion historiques divergent](img/fusion-branch-histo-divergent.png  "Fusion historiques divergent")
+*Figure 12.10-2. Fusion d'une branche pour intégrer les historiques divergents.*
+
+Cependant, il existe un autre moyen : vous pouvez prendre le patch de la modification introduite en C3 et le réappliquer sur C4. Dans Git, cette action est appelée rebaser. Avec la commande rebase, vous prenez toutes les modifications qui ont été validées sur une branche et vous les rejouez sur une autre.
+
+Dans cet exemple, vous lanceriez les commandes suivantes :
+
+`$ git checkout experience`
+`$ git rebase master`
+`First, rewinding head to replay your work on top of it...`
+`Applying: added staged command`
+
+Cela fonctionne en cherchant l'ancêtre commun le plus récent des deux branches (celle sur laquelle vous vous trouvez et celle sur laquelle vous rebasez), en récupérant toutes les différences introduites entre chaque validation de la branche sur laquelle vous êtes, en les sauvant dans des fichiers temporaires, en basculant sur la branche destination et en réappliquant chaque modification dans le même ordre. La figure 12.10-3 illustre ce processus.
+
+![Rebaser les modifications introduites par C3 sur C4](img/rebaser-modif.png  "Rebaser les modifications introduites par C3 sur C4")
+*Figure 12.10-3. Rebaser les modifications introduites par C3 sur C4.*
+
+À ce moment, vous pouvez retourner sur la branche master et réaliser une fusion en avance rapide (voir figure 12.10-4).
+
+![Avance rapide sur la branche master](img/avance-rapide-sur-la-branche.png  "Avance rapide sur la branche master")
+*Figure 12.10-4. Avance rapide sur la branche master*
+
+À présent, l'instantané pointé par C3' est exactement le même que celui pointé par C5 dans l'exemple de fusion. Il n'y a pas de différence entre les résultats des deux types d'intégration, mais rebaser rend l'historique plus clair. Si vous examinez le journal de la branche rebasée, elle est devenue linéaire : toutes les modifications apparaissent en série même si elles ont eu lieu en parallèle.
+
+Vous aurez souvent à rebaser pour vous assurer que les patchs que vous envoyez s'appliquent correctement sur une branche distante — par exemple, sur un projet où vous souhaitez contribuer mais que vous ne maintenez pas. Dans ce cas, vous réaliseriez votre travail dans une branche puis vous rebaseriez votre travail sur origin/master quand vous êtes prêt à soumettre vos patchs au projet principal. De cette manière, le mainteneur n'a pas à réaliser de travail d'intégration — juste une avance rapide ou simplement une application propre.
+
+Il faut noter que l'instantané pointé par le commit final, qu'il soit le dernier des commits d'une opération de rebase ou le commit final issu d'une fusion, sont en fait le même instantané — c'est juste que l'historique est différent. Rebaser rejoue les modifications d'une ligne de commits sur une autre dans l'ordre d'apparition, alors que la fusion joint et fusionne les deux têtes.
+
+##### Rebasages plus inéressants
+
+Vous pouvez aussi faire rejouer votre rebasage sur autre chose qu'une branche. Prenez l'historique de la figure 3-31 par exemple. Vous avez créé une branche pour un sujet spécifique (serveur) pour ajouter des fonctionnalités côté serveur à votre projet et avez réalisé un commit. Ensuite, vous avez créé une branche pour ajouter des modifications côté client (client) et avez validé plusieurs fois. Finalement, vous avez rebasculé sur la branche serveur et avez réalisé quelques commits supplémentaires.
+
+![Un historique avec une branche qui sort d'une autre branche](img/historique-avec-une-branche-qui-sort-d-une-autre-branche-thematique.png  "Un historique avec une branche qui sort d'une autre branche")
+*Figure 12.10-5. Un historique avec une branche qui sort d'une autre branche thématique.*
+
+Supposons que vous décidez que vous souhaitez fusionner vos modifications pour le côté client dans votre ligne principale pour une publication mais vous souhaitez retenir les modifications pour la partie serveur jusqu'à ce qu'elles soient un peu plus testées. Vous pouvez récupérer les modifications pour le côté client qui ne sont pas sur le serveur (C8 et C9) et les rejouer sur la branche master en utilisant l'option *--onto* de git rebase :
+
+`$ git rebase --onto master serveur client`
+
+Cela signifie en essence « Extraire la branche client, déterminer les patchs depuis l'ancêtre commun des branches client et serveur puis les rejouer sur master ». C'est assez complexe, mais le résultat visible sur la figure 12.10-6 est assez impressionnant.
+
+![Rebaser une branche thématique sur une autre branche](img/rebaser-branche-sur-une-autre.png  "Figure 3-32. Rebaser une branche thématique sur une autre branche")
+*Figure 12.10-6. Rebaser une branche thématique sur une autre branche.*
+
+Maintenant, vous pouvez faire une avance rapide sur votre branche master (voir figure 12.10-7) :
+
+`$ git checkout master`
+`$ git merge client`
+
+![Avance rapide sur votre branche master pour inclure les modifications de la branche client.](img/avance-rapide-sur-la-branche-2.png  "Avance rapide sur votre branche master pour inclure les modifications de la branche client.")
+*Figure 12.1-7. Avance rapide sur votre branche master pour inclure les modifications de la branche client.*
+
+Supposons que vous décidiez de tirer votre branche serveur aussi. Vous pouvez rebaser la branche serveur sur la branche master sans avoir à l'extraire avant en utilisant git rebase [branchedebase] [branchedesujet] — qui extrait la branche thématique (dans notre cas, serveur) pour vous et la rejoue sur la branche de base (master) :
+
+`$ git rebase master serveur`
+
+Cette commande rejoue les modifications de serveur sur le sommet de la branche master, comme indiqué dans la figure 12.10-8.
+
+![Rebaser la branche serveur sur le sommet de la branche master.](img/rebaser-branche-sur-sommet.png  "Rebaser la branche serveur sur le sommet de la branche master.") 
+
+Ensuite, vous pouvez faire une avance rapide sur la branche de base (master) :
+
+`$ git checkout master`
+`$ git merge serveur`
+
+Vous pouvez effacer les branches client et serveur une fois que tout le travail est intégré et que vous n'en avez plus besoin, éliminant tout l'historique de ce processus, comme visible sur la figure 12.10-9:
+
+`$ git branch -d client`
+`$ git branch -d serveur`
+
+![L'historique final des commits](img/historique-final-des-commits.png  "L'historique final des commits")
+*Figure 12.10-9. L'historique final des commits.*
+
+##### Les dangers de rebaser
+
+Ah... mais les joies de rebaser ne viennent pas sans leurs contreparties, qui peuvent être résumées en une ligne :
+
+**Ne rebasez jamais des commits qui ont déjà été poussés sur un dépôt public.**
+
+Si vous suivez ce conseil, tout ira bien. Sinon, de nombreuses personnes vont vous haïr et vous serez méprisé par vos amis et votre famille.
+
+Quand vous rebasez des données, vous abandonnez les commits existants et vous en créez de nouveaux qui sont similaires mais différents. Si vous poussez des commits quelque part, que d'autres les tirent et se basent dessus pour travailler, et qu'après coup, vous réécrivez ces commits à l'aide de git rebase et les poussez à nouveau, vos collaborateurs devront re-fusionner leur travail et les choses peuvent rapidement devenir très désordonnées quand vous essaierez de tirer leur travail dans votre dépôt.
+
+[Plus d'infos ici](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Rebaser#Les-dangers-de-rebaser) 
