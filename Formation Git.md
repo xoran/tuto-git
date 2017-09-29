@@ -2,11 +2,16 @@
 ## Alain Kelleter
 alain@ktdev.pro - https://www.ktdev.pro
 
+Ressources liées au cours :
+
+- [tuto-git/github](https://github.com/xoran/tuto-git) (le cours)
+- [tuto-git-test/github](https://github.com/xoran/tuto-git-test) (dépôt fictif pour tester les commandes / tests)
+
 Sources du cours :
 
-* [tuto-git/github](https://github.com/xoran/tuto-git) (le cours)
-* [tuto-git-test/github](https://github.com/xoran/tuto-git-test) (dépôt fictif pour tester les commandes / tests)
+- [Git Book](https://git-scm.com/book/fr/v2) 
 
+ 
 ---
  
 ### 1. Installation
@@ -744,3 +749,6 @@ Si vous suivez ce conseil, tout ira bien. Sinon, de nombreuses personnes vont vo
 Quand vous rebasez des données, vous abandonnez les commits existants et vous en créez de nouveaux qui sont similaires mais différents. Si vous poussez des commits quelque part, que d'autres les tirent et se basent dessus pour travailler, et qu'après coup, vous réécrivez ces commits à l'aide de git rebase et les poussez à nouveau, vos collaborateurs devront re-fusionner leur travail et les choses peuvent rapidement devenir très désordonnées quand vous essaierez de tirer leur travail dans votre dépôt.
 
 [Plus d'infos ici](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Rebaser#Les-dangers-de-rebaser) 
+
+
+
